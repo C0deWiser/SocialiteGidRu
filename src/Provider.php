@@ -64,12 +64,16 @@ class Provider extends AbstractProvider
 
     protected function mapUserToObject(array $user)
     {
+        $name = array_filter([
+            Arr::get($user, 'last_name'),
+            Arr::get($user, 'first_name'),
+            Arr::get($user, 'patronymic'),
+        ]);
+
         return (new User)->setRaw($user)->map([
             'id'       => Arr::get($user, 'sub'),
             'nickname' => Arr::get($user, 'nickname'),
-            'name'     => Str::of(
-                Arr::get($user, 'first_name') . ' ' . Arr::get($user, 'last_name')
-            )->squish(),
+            'name'     => Str::of(implode(' ', $name))->squish()->toString(),
             'email'    => Arr::get($user, 'email'),
             'avatar'   => Arr::get($user, 'avatar'),
         ]);
