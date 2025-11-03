@@ -1,0 +1,20 @@
+{
+    "name": "codewiser/gidru",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Codewiser\\Gidru\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pm",
+            "email": "pm@101media.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "socialiteproviders/manager": "^4.8"
+    }
+}
