@@ -26,9 +26,7 @@ class Provider extends AbstractProvider
         // Признак подтверждения email (bool), поле email_confirmed в ответе
         'email_confirmed',
         // Аватар пользователя, поле avatar в ответе
-        'avatar',
-        // Обеспечивает получение refresh_token
-        'offline_access'
+        'avatar'
     ];
 
     public static function additionalConfigKeys(): array
