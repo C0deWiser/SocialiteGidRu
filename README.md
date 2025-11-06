@@ -29,9 +29,10 @@ Please see the [Base Installation Guide](https://socialiteproviders.com/usage/),
 
 ```php
 'gidru' => [    
-  'client_id' => env('GIDRU_CLIENT_ID'),  
+  'base_url'      => env('GIDRU_BASE_URL'), // optional
+  'client_id'     => env('GIDRU_CLIENT_ID'),  
   'client_secret' => env('GIDRU_CLIENT_SECRET'),  
-  'redirect' => env('GIDRU_REDIRECT_URI') 
+  'redirect'      => env('GIDRU_REDIRECT_URI') 
 ],
 ```
 

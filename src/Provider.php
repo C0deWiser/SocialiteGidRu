@@ -14,6 +14,10 @@ class Provider extends AbstractProvider
 
     protected $scopeSeparator = ' ';
 
+    protected static array $additionalConfigKeys = [
+        'base_url',
+    ];
+
     protected $scopes = [
         // Идентификатор пользователя в Газпром ID, поле sub в ответе
         'openid',
@@ -31,20 +35,32 @@ class Provider extends AbstractProvider
         'offline_access'
     ];
 
+    protected function getBaseUrl(): string
+    {
+        $base_url = $this->getConfig('base_url', 'https://auth.gid.ru');
+
+        return rtrim($base_url, '/');
+    }
+
+    protected function buildUrl(string $path): string
+    {
+        return $this->getBaseUrl().'/'.ltrim($path, '/');
+    }
+
     /**
      * @see https://docs.auth.gid.ru/docs/oidc/oidc_ACF_Code_request/
      */
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
-        return $this->buildAuthUrlFromBase('https://auth.gid.ru/oauth2/auth', $state);
+        return $this->buildAuthUrlFromBase($this->buildUrl('oauth2/auth'), $state);
     }
 
     /**
      * @see https://docs.auth.gid.ru/docs/gid/backend/outgoing-token-request/
      */
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
-        return 'https://auth.gid.ru/oauth2/token';
+        return $this->buildUrl('oauth2/token');
     }
 
     /**
@@ -52,7 +68,7 @@ class Provider extends AbstractProvider
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://auth.gid.ru/api/v1/userinfo', [
+        $response = $this->getHttpClient()->get($this->buildUrl('api/v1/userinfo'), [
             RequestOptions::HEADERS => [
                 'Accept'        => 'application/json',
                 'Authorization' => 'Bearer '.$token,
