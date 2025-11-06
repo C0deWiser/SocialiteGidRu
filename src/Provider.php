@@ -14,10 +14,6 @@ class Provider extends AbstractProvider
 
     protected $scopeSeparator = ' ';
 
-    protected static array $additionalConfigKeys = [
-        'base_url',
-    ];
-
     protected $scopes = [
         // Идентификатор пользователя в Газпром ID, поле sub в ответе
         'openid',
@@ -34,6 +30,11 @@ class Provider extends AbstractProvider
         // Обеспечивает получение refresh_token
         'offline_access'
     ];
+
+    public static function additionalConfigKeys(): array
+    {
+        return ['base_url'];
+    }
 
     protected function getBaseUrl(): string
     {
