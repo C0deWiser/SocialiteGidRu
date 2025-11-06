@@ -14,11 +14,6 @@ class Provider extends AbstractProvider
 
     protected $scopeSeparator = ' ';
 
-    protected $scopes = [
-        # Идентификатор пользователя в Газпром ID, поле sub в ответе
-        'openid',
-    ];
-
     public static function additionalConfigKeys(): array
     {
         return ['base_url'];
@@ -39,9 +34,11 @@ class Provider extends AbstractProvider
     public function getScopes(): array
     {
         // Эта область возвращает идентификатор пользователя.
-        // Без неё всё лишено смысла.
-        // Добавим её безусловно.
-        $this->scopes('openid');
+        // Без неё всё лишено смысла. Добавим её безусловно.
+        $this->scopes([
+            # Идентификатор пользователя в Газпром ID, поле sub в ответе
+            'openid'
+        ]);
 
         return parent::getScopes();
     }
