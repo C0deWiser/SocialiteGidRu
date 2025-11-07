@@ -87,7 +87,9 @@ class Provider extends AbstractProvider
             'nickname' => Arr::get($user, 'nickname'),
             'name'     => Str::of(implode(' ', $name))->squish()->toString(),
             'email'    => Arr::get($user, 'email'),
-            'avatar'   => Arr::get($user, 'avatar'),
+            'avatar'   => Arr::get($user, 'avatar') ??
+                    Arr::get($user, 'avatar_large') ??
+                    Arr::get($user, 'avatar_small'),
         ]);
     }
 }
