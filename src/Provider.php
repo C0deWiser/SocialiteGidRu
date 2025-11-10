@@ -14,6 +14,14 @@ class Provider extends AbstractProvider
 
     protected $scopeSeparator = ' ';
 
+    protected $scopes = [
+        # Идентификатор пользователя в Газпром ID, поле sub в ответе
+        'openid',
+        'nickname', 'profile', 'email', 'email_confirmed', 'avatar',
+        # Provides refresh_token
+        'offline_access',
+    ];
+
     public static function additionalConfigKeys(): array
     {
         return ['base_url'];
@@ -29,18 +37,6 @@ class Provider extends AbstractProvider
     protected function buildUrl(string $path): string
     {
         return $this->getBaseUrl().'/'.ltrim($path, '/');
-    }
-
-    public function getScopes(): array
-    {
-        // Эта область возвращает идентификатор пользователя.
-        // Без неё всё лишено смысла. Добавим её безусловно.
-        $this->scopes([
-            # Идентификатор пользователя в Газпром ID, поле sub в ответе
-            'openid'
-        ]);
-
-        return parent::getScopes();
     }
 
     /**
